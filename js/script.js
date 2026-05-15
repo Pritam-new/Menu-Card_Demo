@@ -7,150 +7,152 @@ let menuItems = []
 let selectedCategory = "All"
 let selectedType = "All"
 
-fetch("js/menu.csv")
-    .then(response => response.text())
-    .then(data => {
+fetch("./js/menu.csv")
+  .then(response => response.text())
+  .then(data => {
 
-        const rows = data.trim().split("\n").slice(1)
+    const rows = data.trim().split("\n")
 
-        menuItems = rows.map(row => {
+    const headers = rows[0].split(",")
 
-            const cols = row.split(",")
+    menuItems = rows.slice(1).map(row => {
 
-            return {
-                id: cols[0],
-                category: cols[1],
-                item_name: cols[2],
-                description: cols[3],
-                price: cols[4],
-                type: cols[5],
-                image: cols[6]
-            }
+      const values = row.split(",")
 
-        })
+      let item = {}
 
-        generateCategoryFilters()
+      headers.forEach((header, index) => {
+        item[header.trim()] = values[index]?.trim()
+      })
 
-        renderMenu()
+      return item
 
     })
+
+    generateCategoryFilters()
+
+    renderMenu()
+
+  })
 
 function generateCategoryFilters(){
 
-    const categories = [
-        "All",
-        ...new Set(menuItems.map(item => item.category))
-    ]
+  categoryFilters.innerHTML = ""
 
-    categories.forEach(category => {
+  const categories = [
+    "All",
+    ...new Set(menuItems.map(item => item.category))
+  ]
 
-        const button = document.createElement("button")
+  categories.forEach(category => {
 
-        button.classList.add("filter-btn")
+    const button = document.createElement("button")
 
-        if(category === "All"){
-            button.classList.add("active")
-        }
+    button.classList.add("filter-btn")
 
-        button.innerText = category
+    if(category === "All"){
+      button.classList.add("active")
+    }
 
-        button.addEventListener("click", () => {
+    button.innerText = category
 
-            selectedCategory = category
+    button.addEventListener("click", () => {
 
-            document
-                .querySelectorAll("#categoryFilters .filter-btn")
-                .forEach(btn => btn.classList.remove("active"))
+      selectedCategory = category
 
-            button.classList.add("active")
+      document
+        .querySelectorAll("#categoryFilters .filter-btn")
+        .forEach(btn => btn.classList.remove("active"))
 
-            renderMenu()
+      button.classList.add("active")
 
-        })
-
-        categoryFilters.appendChild(button)
+      renderMenu()
 
     })
+
+    categoryFilters.appendChild(button)
+
+  })
 
 }
 
 typeFilters.querySelectorAll(".filter-btn")
 .forEach(button => {
 
-    button.addEventListener("click", () => {
+  button.addEventListener("click", () => {
 
-        selectedType = button.dataset.type
+    selectedType = button.dataset.type
 
-        typeFilters
-            .querySelectorAll(".filter-btn")
-            .forEach(btn => btn.classList.remove("active"))
+    typeFilters
+      .querySelectorAll(".filter-btn")
+      .forEach(btn => btn.classList.remove("active"))
 
-        button.classList.add("active")
+    button.classList.add("active")
 
-        renderMenu()
+    renderMenu()
 
-    })
+  })
 
 })
 
 function renderMenu(){
 
-    menuGrid.innerHTML = ""
+  menuGrid.innerHTML = ""
 
-    const filteredItems = menuItems.filter(item => {
+  const filteredItems = menuItems.filter(item => {
 
-        const categoryMatch =
-            selectedCategory === "All" ||
-            item.category === selectedCategory
+    const categoryMatch =
+      selectedCategory === "All" ||
+      item.category === selectedCategory
 
-        const typeMatch =
-            selectedType === "All" ||
-            item.type === selectedType
+    const typeMatch =
+      selectedType === "All" ||
+      item.type === selectedType
 
-        return categoryMatch && typeMatch
+    return categoryMatch && typeMatch
 
-    })
+  })
 
-    filteredItems.forEach(item => {
+  filteredItems.forEach(item => {
 
-        const card = document.createElement("div")
+    const card = document.createElement("div")
 
-        card.classList.add("card")
+    card.classList.add("card")
 
-        card.innerHTML = `
+    card.innerHTML = `
 
-            <img src="${item.image}" alt="${item.item_name}">
+      <img src="${item.image}" alt="${item.item_name}">
 
-            <div class="card-content">
+      <div class="card-content">
 
-                <div class="card-top">
+        <div class="card-top">
 
-                    <div>
+          <div>
 
-                        <h3>${item.item_name}</h3>
+            <h3>${item.item_name}</h3>
 
-                        <span class="badge ${item.type === "Veg" ? "veg" : "nonveg"}">
-                            ${item.type}
-                        </span>
+            <span class="badge ${item.type === "Veg" ? "veg" : "nonveg"}">
+              ${item.type}
+            </span>
 
-                        <p class="desc">
-                            ${item.description}
-                        </p>
+            <p class="desc">
+              ${item.description}
+            </p>
 
-                    </div>
+          </div>
 
-                    <div class="price">
-                        ₹${item.price}
-                    </div>
+          <div class="price">
+            ₹${item.price}
+          </div>
 
-                </div>
+        </div>
 
-            </div>
+      </div>
 
-        `
+    `
 
-        menuGrid.appendChild(card)
+    menuGrid.appendChild(card)
 
-    })
+  })
 
 }
