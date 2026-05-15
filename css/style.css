@@ -1,0 +1,197 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#1b120d;
+    color:white;
+}
+
+/* HERO */
+
+.hero{
+    height:70vh;
+    background:url('../images/bANNER.png') center/cover;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.hero h1{
+    font-size:72px;
+    font-weight:800;
+    letter-spacing:5px;
+    color:#f7e7ce;
+}
+
+.hero p{
+    margin-top:15px;
+    font-size:20px;
+    color:#ddd;
+}
+
+/* FILTERS */
+
+.filters{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(27,18,13,0.95);
+    backdrop-filter:blur(12px);
+    padding:20px;
+    border-bottom:1px solid #3f2b20;
+}
+
+.filter-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:15px;
+    margin-bottom:15px;
+}
+
+.filter-btn{
+    padding:12px 24px;
+    border:none;
+    border-radius:40px;
+    background:#2c1d15;
+    color:white;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.filter-btn:hover,
+.filter-btn.active{
+    background:#c08b5c;
+    color:black;
+}
+
+/* MENU */
+
+.container{
+    width:90%;
+    max-width:1400px;
+    margin:auto;
+    padding:70px 0;
+}
+
+.menu-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:35px;
+}
+
+.card{
+    background:#241711;
+    border-radius:25px;
+    overflow:hidden;
+    border:1px solid #3f2b20;
+    transition:0.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+}
+
+.card img{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+    transition:0.5s;
+}
+
+.card:hover img{
+    transform:scale(1.08);
+}
+
+.card-content{
+    padding:25px;
+}
+
+.card-top{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.card h3{
+    font-size:26px;
+    color:#f7e7ce;
+}
+
+.desc{
+    color:#bbb;
+    margin-top:15px;
+    line-height:1.7;
+}
+
+.price{
+    background:#c08b5c;
+    color:black;
+    padding:10px 18px;
+    border-radius:30px;
+    font-weight:700;
+    height:fit-content;
+}
+
+.badge{
+    display:inline-block;
+    margin-top:15px;
+    padding:6px 14px;
+    border-radius:30px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.badge.veg{
+    background:green;
+}
+
+.badge.nonveg{
+    background:red;
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:50px;
+    border-top:1px solid #3f2b20;
+    background:#140d09;
+}
+
+footer h2{
+    color:#f7e7ce;
+    margin-bottom:10px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:42px;
+}
+
+.hero p{
+    font-size:16px;
+}
+
+}
